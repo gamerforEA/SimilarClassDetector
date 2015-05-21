@@ -1,11 +1,8 @@
 package com.gamerforea.scdetector.similar;
 
-public class SimilarData
+public class SimilarData implements Comparable<SimilarData>
 {
 	public final ClassContainer classContainer;
-	public float similarStrings = 0F;
-	public float similarFields = 0F;
-	public float similarMethods = 0F;
 
 	public SimilarData(ClassContainer classContainer)
 	{
@@ -17,19 +14,25 @@ public class SimilarData
 		return new GsonSimilarData(this);
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.classContainer.name;
+	}
+
+	@Override
+	public int compareTo(SimilarData o)
+	{
+		return this.toString().compareTo(o.toString());
+	}
+
 	public static class GsonSimilarData
 	{
 		public final String name;
-		public final float similarStrings;
-		public final float similarFields;
-		public final float similarMethods;
 
 		public GsonSimilarData(SimilarData data)
 		{
 			this.name = data.classContainer.name;
-			this.similarStrings = data.similarStrings;
-			this.similarFields = data.similarFields;
-			this.similarMethods = data.similarMethods;
 		}
 	}
 }
